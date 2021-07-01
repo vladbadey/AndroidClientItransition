@@ -10,10 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fanfics"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.CompositionDetails" android:configChanges="uiMode" android:label="Composition"/>
+        <activity android:name=".activity.CompositionDetails" android:configChanges="orientation|keyboard|keyboardHidden|screenSize" android:label="Composition" />
         <activity android:name=".activity.OnboardingActivity" android:configChanges="uiMode" android:label="Onboarding"/>
         <activity android:name=".activity.SignupActivity" android:configChanges="uiMode" android:label="Signup"/>
         <activity android:name=".activity.MainActivity" android:configChanges="uiMode"/>
+        <activity android:name=".activity.GuestMainActivity" android:configChanges="uiMode"/>
+        <activity android:name=".activity.GuestCompositionDetails" android:configChanges="uiMode"/>
+        <activity android:name=".activity.FavoritesActivity" android:configChanges="uiMode"/>
+        <activity android:name=".activity.UserFandomsActivity" android:configChanges="uiMode"/>
+        <activity android:name=".activity.UpdateOnboardingActivity" android:configChanges="uiMode"/>
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="uiMode"

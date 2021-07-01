@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,24 +16,22 @@ import android.widget.Spinner;
 import com.example.fanfics.FanficsUtils;
 import com.example.fanfics.JsonPlaceHolderApi;
 import com.example.fanfics.R;
+import com.example.fanfics.adapter.GuestCompositionAdapter;
 import com.example.fanfics.dto.request.CompositionRequestDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.fanfics.adapter.CompositionAdapter;
 import com.example.fanfics.model.Fandom;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class GuestMainActivity extends AppCompatActivity {
 
     private Spinner spinner;
     private Button sort;
-    private Button getFavorites;
-    private Button userFandoms;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<CompositionRequestDto> list;
@@ -46,15 +43,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_guest_main);
 
         JsonPlaceHolderApi jsonPlaceHolderApi = FanficsUtils.getJsonPlaceholder();
 
-        Bundle args = FanficsUtils.getBundle();
         extras = getIntent().getExtras();
         spinner = findViewById(R.id.s_spinner);
-        getFavorites = findViewById(R.id.b_getFavorites);
-        userFandoms = findViewById(R.id.b_userFandoms);
         sort = findViewById(R.id.b_sort);
         recyclerView = findViewById(R.id.recyclerViewId);
         recyclerView.setHasFixedSize(true);
@@ -66,29 +60,13 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<CompositionRequestDto>> call,
                                    Response<List<CompositionRequestDto>> response) {
                 list = response.body();
-                adapter = new CompositionAdapter(context, list);
+                adapter = new GuestCompositionAdapter(context, list);
                 recyclerView.setAdapter(adapter);
             }
 
             @Override
             public void onFailure(Call<List<CompositionRequestDto>> call, Throwable t) {
                 Log.i("vlad", "Incorrect");
-            }
-        });
-
-        userFandoms.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, UserFandomsActivity.class);
-                context.startActivity(intent);
-            }
-        });
-
-        getFavorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, FavoritesActivity.class);
-                context.startActivity(intent);
             }
         });
 
@@ -99,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<List<CompositionRequestDto>> call, Response<List<CompositionRequestDto>> response) {
                         list = response.body();
-                        adapter = new CompositionAdapter(context, list);
+                        adapter = new GuestCompositionAdapter(context, list);
                         recyclerView.setAdapter(adapter);
                     }
 
@@ -133,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onResponse(Call<List<CompositionRequestDto>> call, Response<List<CompositionRequestDto>> response) {
                                         list = response.body();
-                                        adapter = new CompositionAdapter(context, list);
+                                        adapter = new GuestCompositionAdapter(context, list);
                                         recyclerView.setAdapter(adapter);
                                     }
 
@@ -147,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onResponse(Call<List<CompositionRequestDto>> call, Response<List<CompositionRequestDto>> response) {
                                         list = response.body();
-                                        adapter = new CompositionAdapter(context, list);
+                                        adapter = new GuestCompositionAdapter(context, list);
                                         recyclerView.setAdapter(adapter);
                                     }
 

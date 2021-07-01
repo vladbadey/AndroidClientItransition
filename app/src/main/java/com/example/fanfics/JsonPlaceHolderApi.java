@@ -5,6 +5,7 @@ import com.example.fanfics.dto.request.CompositionRequestDto;
 import com.example.fanfics.dto.request.FandomRequestDto;
 import com.example.fanfics.dto.request.LoginRequestDto;
 import com.example.fanfics.dto.request.SignupRequestDto;
+import com.example.fanfics.model.Composition;
 import com.example.fanfics.model.Fandom;
 
 import java.util.List;
@@ -40,4 +41,16 @@ public interface JsonPlaceHolderApi {
 
     @POST("api/fandoms/fill")
     Call<List<FandomRequestDto>> fillUserFandoms(@Query("email") String email, @Body List<FandomRequestDto> fandomRequestDto);
+
+    @POST("api/favorites/add")
+    Call<List<Composition>> addNewFavorite(@Query("username") String username, @Query("compositionName") String compositionName);
+
+    @GET("api/favorites/all")
+    Call<List<CompositionRequestDto>> getFavoriteCompositions(@Query("name") String name);
+
+    @GET("api/fandoms/user/all")
+    Call<List<Fandom>> getUserFandoms(@Query("name") String name);
+
+    @POST("api/fandoms/update")
+    Call<List<FandomRequestDto>> updateUserFandoms(@Query("name") String name, @Body List<FandomRequestDto> fandomRequestDto);
 }

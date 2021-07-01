@@ -1,9 +1,8 @@
 package com.example.fanfics.activity;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -26,15 +25,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CompositionDetails extends AppCompatActivity {
+public class GuestCompositionDetails extends AppCompatActivity {
 
     private ImageView image;
 
     private TextView name;
 
     private TextView description;
-
-    private ImageButton star;
 
     private TextView chapterName;
 
@@ -45,36 +42,18 @@ public class CompositionDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_composition_details);
+        setContentView(R.layout.activity_guest_composition_details);
 
         Bundle args = FanficsUtils.getBundle();
 
         JsonPlaceHolderApi jsonPlaceHolderApi = FanficsUtils.getJsonPlaceholder();
 
         extras = getIntent().getExtras();
-        star = findViewById(R.id.ib_star);
         image = findViewById(R.id.iv_compositionImage);
         name = findViewById(R.id.tv_compositionName);
         description = findViewById(R.id.tv_compositionDesc);
         chapterName = findViewById(R.id.tv_chapterName);
-
-        star.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                star.setBackgroundResource(R.drawable.ic_baseline_star_rate_24);
-                jsonPlaceHolderApi.addNewFavorite(args.getString("username"), name.getText().toString()).enqueue(new Callback<List<Composition>>() {
-                    @Override
-                    public void onResponse(Call<List<Composition>> call, Response<List<Composition>> response) {
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Composition>> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
+        
 
         if (extras != null) {
             Picasso.with(this).load(extras.getString("image")).into(image);

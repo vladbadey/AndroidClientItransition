@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.fanfics.FanficsUtils;
 import com.example.fanfics.JsonPlaceHolderApi;
 import com.example.fanfics.R;
 import com.example.fanfics.dto.request.SignupRequestDto;
@@ -17,8 +19,6 @@ import com.example.fanfics.dto.request.SignupRequestDto;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -39,13 +39,10 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        Bundle args = FanficsUtils.getBundle();
         mResponseTv = (TextView) findViewById(R.id.tv_response);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.20.216.146:8080/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+        jsonPlaceHolderApi = FanficsUtils.getJsonPlaceholder();
 
         eUsername = findViewById(R.id.et_signup_username);
         eEmail = findViewById(R.id.et_signup_email);
@@ -57,7 +54,10 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 username = eUsername.getText().toString();
+                args.putString("username", username);
+                Log.i("ing", args.getString("username"));
                 email = eEmail.getText().toString();
+                args.putString("email", email);
                 password = ePassword.getText().toString();
 
                 signup(username, email, password);

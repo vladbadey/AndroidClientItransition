@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OnboardingActivity extends AppCompatActivity {
+public class UpdateOnboardingActivity extends AppCompatActivity {
 
     private Button button;
     private RecyclerView recyclerView;
@@ -43,6 +43,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = FanficsUtils.getJsonPlaceholder();
 
+        Bundle args = FanficsUtils.getBundle();
         extras = getIntent().getExtras();
         button = findViewById(R.id.b_onboarding);
         recyclerView = findViewById(R.id.rv_onboarding);
@@ -81,7 +82,7 @@ public class OnboardingActivity extends AppCompatActivity {
                         fandomList.add(new FandomRequestDto(fandom.getName(), fandom.getImage()));
                     }
                 }
-                jsonPlaceHolderApi.fillUserFandoms(extras.getString("currentUserEmail"), fandomList).enqueue(new Callback<List<FandomRequestDto>>() {
+                jsonPlaceHolderApi.updateUserFandoms(args.getString("username"), fandomList).enqueue(new Callback<List<FandomRequestDto>>() {
                     @Override
                     public void onResponse(Call<List<FandomRequestDto>> call, Response<List<FandomRequestDto>> response) {
 

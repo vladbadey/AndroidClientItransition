@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OnboardingActivity extends AppCompatActivity {
+public class UserFandomsActivity extends AppCompatActivity {
 
     private Button button;
     private RecyclerView recyclerView;
@@ -39,28 +39,23 @@ public class OnboardingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_onboarding);
+        setContentView(R.layout.activity_user_fandoms);
 
         JsonPlaceHolderApi jsonPlaceHolderApi = FanficsUtils.getJsonPlaceholder();
 
         extras = getIntent().getExtras();
-        button = findViewById(R.id.b_onboarding);
+        Bundle args = FanficsUtils.getBundle();
+        button = findViewById(R.id.b_setFandoms);
         recyclerView = findViewById(R.id.rv_onboarding);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Call<List<Fandom>> call = jsonPlaceHolderApi.onboarding();
+        Call<List<Fandom>> call = jsonPlaceHolderApi.getUserFandoms(args.getString("username"));
 
         call.enqueue(new Callback<List<Fandom>>() {
             @Override
-            public void onResponse(Call<List<Fandom>> call,
-                                   Response<List<Fandom>> response) {
-                if (!response.isSuccessful()) {
-                    Log.i("vlad", "response not suc");
-                    return;
-                }
+            public void onResponse(Call<List<Fandom>> call, Response<List<Fandom>> response) {
                 list = response.body();
                 adapter = new OnboardingAdapter(context, list);
-                Log.i("vlad", "" + adapter.toString());
                 recyclerView.setAdapter(adapter);
             }
 
@@ -73,26 +68,8 @@ public class OnboardingActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Boolean> status = OnboardingAdapter.getStatus();
-                List<FandomRequestDto> fandomList = new ArrayList<>();
-                for (int i = 0; i < status.size(); i++) {
-                    if (status.get(i)) {
-                        Fandom fandom = list.get(i);
-                        fandomList.add(new FandomRequestDto(fandom.getName(), fandom.getImage()));
-                    }
-                }
-                jsonPlaceHolderApi.fillUserFandoms(extras.getString("currentUserEmail"), fandomList).enqueue(new Callback<List<FandomRequestDto>>() {
-                    @Override
-                    public void onResponse(Call<List<FandomRequestDto>> call, Response<List<FandomRequestDto>> response) {
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<FandomRequestDto>> call, Throwable t) {
-
-                    }
-                });
-                Intent intent = new Intent(context, MainActivity.class);
+                Intent intent = new Intent(context, UpdateOnboardingActivity.class);
+//                intent.putExtra("currentUserEmail", args.getString("email"));
                 context.startActivity(intent);
             }
         });

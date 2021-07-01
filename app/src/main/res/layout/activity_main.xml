@@ -20,14 +20,45 @@
         tools:layout_editor_absoluteX="270dp"
         tools:layout_editor_absoluteY="16dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewId"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="50dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="-1dp"
-        tools:layout_editor_absoluteY="70dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginTop="50dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            >
+            <Button
+                android:id="@+id/b_getFavorites"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:text="Get Favorites"
+                android:textSize="13dp"
+                />
+
+            <Button
+                android:id="@+id/b_userFandoms"
+                android:layout_width="170dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="50dp"
+                android:textSize="13dp"
+                android:text="Get my fandoms"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <Spinner
         android:id="@+id/s_spinner"
